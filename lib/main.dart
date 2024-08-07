@@ -43,7 +43,7 @@ class _harryCurrencyState extends State<harryCurrency> {
              TextField(
               controller: roiController,
               decoration: InputDecoration(
-                label: Text('Roi'),
+                label: Text('Rate of Interest'),
                 border:OutlineInputBorder(borderRadius: BorderRadius.circular(10))
               ),
             ),
