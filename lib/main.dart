@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 void main(){
   runApp(
     const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: harryCurrency(),
     )
   );
@@ -22,7 +24,6 @@ class _harryCurrencyState extends State<harryCurrency> {
   TextEditingController roiController=TextEditingController();
   TextEditingController termController=TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +32,26 @@ class _harryCurrencyState extends State<harryCurrency> {
         width: 480,
         child: Column(
           children: [
-            Image.network('https://picsum.photos/250?image=9',height: 200,width: 200,),
+                Stack(
+  alignment: Alignment.center,
+  children: [
+    Image.asset('lib/Img/interst.png', width: 200, height: 200),
+    Positioned(
+      bottom: 0,
+      child: Text(
+        'Interest Calculator',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+          color: Color.fromRGBO(2, 55, 55, 1),
+        ),
+      ),
+    ),
+  ],
+)
+
+
+,
             SizedBox(height: 10,),
             TextField(
               controller: principalController,
@@ -74,13 +94,13 @@ class _harryCurrencyState extends State<harryCurrency> {
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
                       borderRadius: BorderRadius.circular(10),
-                      padding: EdgeInsets.only(left: 20, right: 20),
                       hint: Text('Select Curruncy'),
                       value: smallValue,
+                      padding: EdgeInsets.only(left: 40, right: 45),
                       items: bigValue.map((String newValue) {
                         return DropdownMenuItem<String>(
                           value: newValue,
-                          child: Text(newValue),
+                          child: Center(child: Text(newValue)),
                         );
                       }).toList(),
                       onChanged: <String>(someValue) {
