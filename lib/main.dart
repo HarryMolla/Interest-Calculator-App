@@ -149,7 +149,7 @@ class _harryCurrencyState extends State<harryCurrency> {
     double term=double.parse(termController.text);
     
     double totalAmoutPay=principlal+(principlal*roi*term)/100;
-    String result= "after $term year you resulut will be $totalAmoutPay";
+    String result= "after $term years interst rate will be $totalAmoutPay";
     return result;
   }
   void resatResulut(){
