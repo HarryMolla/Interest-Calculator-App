@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 void main(){
   runApp(
     const MaterialApp(
@@ -13,8 +14,8 @@ class harryCurrency extends StatefulWidget {
 }
 class _harryCurrencyState extends State<harryCurrency> {
   
-  var bigValue=['first','second','third'];
-  var smallValue='first';
+  var bigValue=['Birr','Dollar','Pound'];
+  var smallValue=null;
   var theDisplay='';
 
   TextEditingController principalController=TextEditingController();
@@ -63,15 +64,18 @@ class _harryCurrencyState extends State<harryCurrency> {
                   SizedBox(width: 10,),
                   SizedBox(
                     width: 235,
+                    height: 55,
                     child: Container(
                       decoration: BoxDecoration(
-                       border: Border.all(width: 0.5),
+                       color: Color.fromARGB(255, 235, 235, 235),
+                      
                        borderRadius: BorderRadius.circular(10)
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
                       borderRadius: BorderRadius.circular(10),
-                      padding: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      hint: Text('Select Curruncy'),
                       value: smallValue,
                       items: bigValue.map((String newValue) {
                         return DropdownMenuItem<String>(
@@ -114,22 +118,22 @@ class _harryCurrencyState extends State<harryCurrency> {
               ),
               SizedBox(width: 10,),
               SizedBox(
+                
                 width: 235,
                 height: 55,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 112, 101, 2),
+                    side: BorderSide(width: 1, color:Colors.red),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)
                     )
                     ),
-                  clipBehavior: Clip.hardEdge,
                   onPressed: (){
                    setState(() {
                      resatResulut();
                    });
                   }, 
-                  child: Text('Resat',style: TextStyle(color: Colors.white),)
+                  child: Text('Resat',style: TextStyle(color: Colors.red),)
                   ),
               ),
             ],
@@ -149,7 +153,7 @@ class _harryCurrencyState extends State<harryCurrency> {
     double term=double.parse(termController.text);
     
     double totalAmoutPay=principlal+(principlal*roi*term)/100;
-    String result= "after $term years interst rate will be $totalAmoutPay";
+    String result= "After $term years interst rate will be $totalAmoutPay";
     return result;
   }
   void resatResulut(){
@@ -158,5 +162,6 @@ class _harryCurrencyState extends State<harryCurrency> {
     termController.text='';
     theDisplay='';
     smallValue=bigValue[0];
+    
   }
 }
