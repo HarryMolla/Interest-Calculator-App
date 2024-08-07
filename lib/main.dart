@@ -32,27 +32,20 @@ class _harryCurrencyState extends State<harryCurrency> {
         width: 480,
         child: Column(
           children: [
-                Stack(
-  alignment: Alignment.center,
-  children: [
-    Image.asset('lib/Img/interst.png', width: 200, height: 200),
-    Positioned(
-      bottom: 0,
-      child: Text(
-        'Interest Calculator',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-          color: Color.fromRGBO(2, 55, 55, 1),
-        ),
-      ),
-    ),
-  ],
-)
-
-
-,
-            SizedBox(height: 10,),
+            Stack(
+              alignment: Alignment.bottomCenter,   
+              children: [
+                Image.asset('lib/Img/interst.png', width: 200, height: 200),
+                  const Text('Interest Calculator',
+                        style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22,
+                                  color: Color.fromRGBO(2, 55, 55, 1),
+                          ),
+                   ),
+                          ],
+           ),
+            SizedBox(height: 40,),
             TextField(
               controller: principalController,
               decoration: InputDecoration(
@@ -62,6 +55,7 @@ class _harryCurrencyState extends State<harryCurrency> {
             ),
             SizedBox(height: 10,),
              TextField(
+              keyboardType: TextInputType.number,
               controller: roiController,
               decoration: InputDecoration(
                 label: Text('Rate of Interest'),
@@ -159,6 +153,7 @@ class _harryCurrencyState extends State<harryCurrency> {
             ],
             ),
             SizedBox(height: 15,),
+            Text('Result:'),
             Text(theDisplay)
           ],
         ),
