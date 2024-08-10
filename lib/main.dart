@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -22,6 +23,9 @@ class _harryCurrencyState extends State<harryCurrency> {
   TextEditingController principalController = TextEditingController();
   TextEditingController roiController = TextEditingController();
   TextEditingController termController = TextEditingController();
+  String? principalError;
+  String? termError;
+  String? RoiError;
 
   @override
   Widget build(BuildContext context) {
@@ -52,30 +56,45 @@ class _harryCurrencyState extends State<harryCurrency> {
                     height: 40,
                   ),
                   TextFormField(
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Principal is required';
-                      }
-                      return null;
+                    onChanged: (value) {
+                      setState(() {
+                        if (value.isEmpty) {
+                          principalError = 'Principal is required';
+                        } else if (int.tryParse(value) == null) {
+                          principalError = 'Please type only numbers';
+                        } else {
+                          principalError = null; // Clear error if valid
+                        }
+                      });
                     },
                     controller: principalController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                        label: Text('Prncipal'),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                      label: Text('Principal'),
+                      errorText: principalError,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   TextFormField(
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'ROI is required';
-                      }
-                      return null;
+                    onChanged: (value) {
+                      setState(() {
+                        if (value.isEmpty) {
+                          RoiError='Rat of interest is required';
+                        } else if (int.tryParse(value)==null) {
+                          RoiError="Type only numbers";
+                        } else {
+                          RoiError=null;
+                        }
+                      });
                     },
                     controller: roiController,
                     decoration: InputDecoration(
+                        errorText: RoiError,
                         label: Text('Rate of Interest'),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
@@ -88,14 +107,20 @@ class _harryCurrencyState extends State<harryCurrency> {
                       SizedBox(
                           width: 235,
                           child: TextFormField(
-                            validator: (String? value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Term is required';
-                              }
-                              return null;
+                            onChanged: (value) {
+                              setState(() {
+                                if (value.isEmpty) {
+                                  termError="Term is required";
+                                } else if (int.tryParse(value)==null) {
+                                  termError="type only number";
+                                } else {
+                                  termError=null;
+                                }
+                              });
                             },
                             controller: termController,
                             decoration: InputDecoration(
+                                errorText: termError,
                                 label: Text('Term'),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10))),
