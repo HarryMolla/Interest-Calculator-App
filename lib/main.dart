@@ -27,6 +27,42 @@ class _harryCurrencyState extends State<harryCurrency> {
   String? termError;
   String? RoiError;
 
+  void validatePrincipal(String value) {
+    setState(() {
+      if (value.isEmpty) {
+        principalError = 'Principal is required';
+      } else if (int.tryParse(value) == null) {
+        principalError = 'Please type only numbers';
+      } else {
+        principalError = null; // Clear error if valid
+      }
+    });
+  }
+
+  void validateRoi(String value) {
+    setState(() {
+      if (value.isEmpty) {
+        RoiError = 'Rate of Interest is required';
+      } else if (int.tryParse(value) == null) {
+        RoiError = "Type only numbers";
+      } else {
+        RoiError = null;
+      }
+    });
+  }
+
+  void validateTerm(String value) {
+    setState(() {
+      if (value.isEmpty) {
+        termError = "Term is required";
+      } else if (int.tryParse(value) == null) {
+        termError = "Type only numbers";
+      } else {
+        termError = null;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,17 +92,7 @@ class _harryCurrencyState extends State<harryCurrency> {
                     height: 40,
                   ),
                   TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        if (value.isEmpty) {
-                          principalError = 'Principal is required';
-                        } else if (int.tryParse(value) == null) {
-                          principalError = 'Please type only numbers';
-                        } else {
-                          principalError = null; // Clear error if valid
-                        }
-                      });
-                    },
+                    onChanged: validatePrincipal,
                     controller: principalController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
@@ -81,17 +107,7 @@ class _harryCurrencyState extends State<harryCurrency> {
                     height: 10,
                   ),
                   TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        if (value.isEmpty) {
-                          RoiError='Rat of interest is required';
-                        } else if (int.tryParse(value)==null) {
-                          RoiError="Type only numbers";
-                        } else {
-                          RoiError=null;
-                        }
-                      });
-                    },
+                    onChanged: validateRoi,
                     controller: roiController,
                     decoration: InputDecoration(
                         errorText: RoiError,
@@ -107,17 +123,7 @@ class _harryCurrencyState extends State<harryCurrency> {
                       SizedBox(
                           width: 235,
                           child: TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                if (value.isEmpty) {
-                                  termError="Term is required";
-                                } else if (int.tryParse(value)==null) {
-                                  termError="type only number";
-                                } else {
-                                  termError=null;
-                                }
-                              });
-                            },
+                            onChanged: validateTerm,
                             controller: termController,
                             decoration: InputDecoration(
                                 errorText: termError,
@@ -172,12 +178,14 @@ class _harryCurrencyState extends State<harryCurrency> {
                                     borderRadius: BorderRadius.circular(10))),
                             clipBehavior: Clip.hardEdge,
                             onPressed: () {
-                              setState(() {
-                                if (_formKey.currentState != null &&
-                                    _formKey.currentState!.validate()) {
-                                  this.theDisplay = caluculatTotalReturn();
-                                }
-                              });
+                              validatePrincipal(principalController.text);
+                              validateRoi(roiController.text);
+                              validateTerm(termController.text);
+
+                              if (_formKey.currentState != null &&
+                                  _formKey.currentState!.validate()) {
+                                this.theDisplay = caluculatTotalReturn();
+                              }
                             },
                             child: Text(
                               'Calculate',
@@ -201,7 +209,7 @@ class _harryCurrencyState extends State<harryCurrency> {
                               });
                             },
                             child: Text(
-                              'Resat',
+                              'Reset',
                               style: TextStyle(color: Colors.red),
                             )),
                       ),
@@ -225,7 +233,7 @@ class _harryCurrencyState extends State<harryCurrency> {
     double term = double.parse(termController.text);
 
     double totalAmoutPay = principlal + (principlal * roi * term) / 100;
-    String result = "After $term years interst rate will be $totalAmoutPay";
+    String result = "After $term years interest rate will be $totalAmoutPay";
     return result;
   }
 
