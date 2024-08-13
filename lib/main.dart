@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -26,6 +27,12 @@ class _harryCurrencyState extends State<harryCurrency> {
   String? principalError;
   String? termError;
   String? RoiError;
+  bool _isWhite=true;
+  void _bagroundColorToggle(){
+    setState(() {
+      _isWhite=!_isWhite;
+    });
+  }
 
   void validatePrincipal(String value) {
     setState(() {
@@ -66,13 +73,28 @@ class _harryCurrencyState extends State<harryCurrency> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      backgroundColor: _isWhite? const Color.fromARGB(255, 240, 240, 240):Colors.black,
+      appBar: AppBar(
+        backgroundColor: _isWhite? const Color.fromARGB(255, 240, 240, 240):Colors.black,
+        actions: [
+          IconButton(
+            onPressed: _bagroundColorToggle, 
+            icon: Icon(
+              _isWhite? Icons.sunny:Icons.dark_mode
+              ),
+              color: _isWhite? Colors.black:Colors.white,
+              ),
+              Icon(Icons.abc, color: Color.fromRGBO(0, 0, 0, 0),)
+          ],),
+      body: SingleChildScrollView(child: 
+      Center(
         child: Form(
           key: _formKey,
           child: Padding(
               padding: EdgeInsets.all(10),
               child: Column(
                 children: [
+                  
                   Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
@@ -91,7 +113,9 @@ class _harryCurrencyState extends State<harryCurrency> {
                   SizedBox(
                     height: 40,
                   ),
-                  TextFormField(
+                 SizedBox(
+                  width: 480,
+                  child:  TextFormField(
                     onChanged: validatePrincipal,
                     controller: principalController,
                     keyboardType: TextInputType.number,
@@ -103,10 +127,13 @@ class _harryCurrencyState extends State<harryCurrency> {
                       ),
                     ),
                   ),
+                 ),
                   SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
+                  SizedBox(
+                    width: 480,
+                    child: TextFormField(
                     onChanged: validateRoi,
                     controller: roiController,
                     decoration: InputDecoration(
@@ -115,10 +142,16 @@ class _harryCurrencyState extends State<harryCurrency> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
                   ),
+                  ),
                   SizedBox(
                     height: 10,
                   ),
+                  Center(
+                    
+                    child: 
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                           width: 235,
@@ -161,11 +194,12 @@ class _harryCurrencyState extends State<harryCurrency> {
                                 ),
                               )))
                     ],
-                  ),
+                  ),),
                   SizedBox(
                     height: 10,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: 235,
@@ -223,7 +257,7 @@ class _harryCurrencyState extends State<harryCurrency> {
                 ],
               )),
         ),
-      ),
+      )),
     );
   }
 
